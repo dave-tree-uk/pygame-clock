@@ -10,18 +10,31 @@ Simple clock in pygame
 
 
 import pygame
-import time
-import sys
 import os
-
-# Set window position
-os.environ['SDL_VIDEO_WINDOW_POS'] = '%d,%d' % (50, 50)
-
+import sys
 
 pygame.init()
-screen = pygame.display.set_mode((200, 100), pygame.NOFRAME)
+
+# Get screen resolution
+info = pygame.display.Info()
+screen_width = info.current_w
+screen_height = info.current_h
+
+# Set window position
+window_width = 200
+window_height = 100
+buffer_x = 50
+buffer_y = 50
+pos_x = screen_width - window_width - buffer_x
+pos_y = buffer_y
+os.environ['SDL_VIDEO_WINDOW_POS'] = '%d,%d' % (pos_x, pos_y)
+
+screen = pygame.display.set_mode((window_width, window_height), pygame.NOFRAME)
 clock = pygame.time.Clock()
+
 font = pygame.font.Font(None, 36)
+text = font.render('12:34', True, (255, 255, 255))
+text_rect = text.get_rect(center=(100, 50))
 
 while True:
     for event in pygame.event.get():
@@ -30,8 +43,6 @@ while True:
             sys.exit()
 
     screen.fill((0, 0, 0))
-    current_time = time.strftime('%H:%M:%S')
-    text = font.render(current_time, True, (255, 255, 255))
-    screen.blit(text, (50, 50))
-    pygame.display.update()
-    clock.tick(1)
+    screen.blit(text, text_rect)
+    pygame.display.flip()
+    clock.tick(60)
