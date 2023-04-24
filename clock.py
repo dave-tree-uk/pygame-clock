@@ -32,7 +32,7 @@ import time
 import sys
 
 pygame.init()
-screen = pygame.display.set_mode((400, 400))
+screen = pygame.display.set_mode((200, 100))
 clock = pygame.time.Clock()
 font = pygame.font.Font(None, 36)
 
@@ -45,6 +45,6 @@ while True:
     screen.fill((0, 0, 0))
     current_time = time.strftime('%H:%M:%S')
     text = font.render(current_time, True, (255, 255, 255))
-    screen.blit(text, (160, 180))
+    screen.blit(text, (50, 50))
     pygame.display.update()
     clock.tick(1)
